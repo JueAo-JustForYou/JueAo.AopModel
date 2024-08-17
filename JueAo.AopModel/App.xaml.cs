@@ -92,7 +92,8 @@ namespace JueAo.AopModel
 
 
             MyContainer.Instance.Builder.Register(c => new CallTester());
-            MyContainer.Instance.Builder.Register(c => new CommandLogAop());
+            MyContainer.Instance.Builder.RegisterType<TraceLogger>();
+            MyContainer.Instance.Builder.RegisterType<CommandLogAop>();
 
             MyContainer.Instance.Builder.RegisterType<Views.MainWindowView>();
             MyContainer.Instance.Builder.RegisterType<ViewModels.MainWindowViewModel>()

@@ -3,6 +3,7 @@ using Autofac.Extras.DynamicProxy;
 using JueAo.AopModel.ViewModels;
 using JueAo.Infrastructure;
 using JueAo.Infrastructure.Aops;
+using Microsoft.Extensions.Logging;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
@@ -83,7 +84,9 @@ namespace JueAo.AopModel.Views
             }
 
 
-            MyContainer.Instance.Builder.Register(c => new CommandLogAop());
+            //MyContainer.Instance.Builder.Register(c => new CommandLogAop());
+            MyContainer.Instance.Builder.RegisterType<TraceLogger>();
+            MyContainer.Instance.Builder.RegisterType<CommandLogAop>();
 
             //MyContainer.Instance.Builder.RegisterType<Views.MainWindowView>();
             //MyContainer.Instance.Builder.RegisterType<ViewModels.MainWindowViewModel>()

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using JueAo.Infrastructure.Attributes;
 
 namespace JueAo.AopModel.ModuleOne.ViewModels
 {
@@ -32,6 +33,8 @@ namespace JueAo.AopModel.ModuleOne.ViewModels
             m_command2 = new DelegateCommand(ExecuteCommand2);
         }
 
+
+        [LogAttributes(Info ="Ui1ViewModel…………Command2")]
         public virtual void ExecuteCommand2()
         {
             System.Diagnostics.Trace.WriteLine("Ui1ViewModel Command2");

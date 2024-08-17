@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace JueAo.Infrastructure.Attributes
 {
-    public class LogAttributes 
-    {
 
+    [AttributeUsage(AttributeTargets.Method, Inherited = true)]
+    public class LogAttributes : Attribute
+    {
+        public bool IsIngore { get; set; }
+
+        public string Info { get; set; } = string.Empty;
     }
 }
