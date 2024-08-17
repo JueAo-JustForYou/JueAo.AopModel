@@ -47,7 +47,18 @@ namespace JueAo.AopModel.ViewModels
         {
             System.Diagnostics.Trace.WriteLine("Command1");
 
-            m_regionManger.RequestNavigate("Ui1", "Ui1");
+            m_regionManger.RequestNavigate("Ui1", "Ui1", (result) => 
+            {
+                if(result.Result == true)
+                {
+
+                }
+                else
+                {
+                    var v = new AopModel.ModuleTwo.ViewModels.Ui2ViewModel();
+                    v.ExecuteCommand1();
+                }
+            });
 
 
         }

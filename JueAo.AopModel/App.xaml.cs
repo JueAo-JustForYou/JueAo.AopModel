@@ -57,7 +57,8 @@ namespace JueAo.AopModel
 
         protected override Window CreateShell()
         {
-
+            //var v = new AopModel.ModuleTwo.ViewModels.Ui2ViewModel();
+            //v.ExecuteCommand1();
             return this.Container.Resolve<Views.MainWindowView>();
         }
 
