@@ -1,0 +1,22 @@
+﻿<Window x:Class="JueAo.AopModel.Views.MainWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JueAo.AopModel.Views"
+        xmlns:prism ="http://prismlibrary.com/"
+        mc:Ignorable="d"
+         prism:ViewModelLocator.AutoWireViewModel="False"
+        Title="MainWindowView" Height="450" Width="800">
+    <!--prism:ViewModelLocator.AutoWireViewModel="True"-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Column="0" Content="按钮1" Command="{Binding Command1}"/>
+        <Button Grid.Column="1" Content="按钮2" Command="{Binding Command2}"/>
+
+    </Grid>
+</Window>
