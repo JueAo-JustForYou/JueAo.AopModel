@@ -18,7 +18,7 @@ namespace JueAo.AopModel.ModuleTwo
         {
             containerRegistry.RegisterForNavigation<Views.Ui2>("Ui2");
 
-            MyContainer.Instance.Builder.RegisterType<ViewModels.Ui2ViewModel>();
+            //MyContainer.Instance.Builder.RegisterType<ViewModels.Ui2ViewModel>();
         }
     }
 

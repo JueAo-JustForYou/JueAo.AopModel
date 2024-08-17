@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using JueAo.Infrastructure.Attributes;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,11 +33,13 @@ namespace JueAo.AopModel.ModuleOne.ViewModels
             m_command2 = new DelegateCommand(ExecuteCommand2);
         }
 
+        [PostLog()]
         public virtual void ExecuteCommand2()
         {
             System.Diagnostics.Trace.WriteLine("Ui1ViewModel Command2");
         }
 
+        [PostLog()]
         public void ExecuteCommand1()
         {
             System.Diagnostics.Trace.WriteLine("Ui1ViewModel Command1");

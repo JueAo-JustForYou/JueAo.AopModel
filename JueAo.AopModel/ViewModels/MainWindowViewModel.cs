@@ -1,14 +1,7 @@
-﻿using Autofac;
-using Autofac.Extras.DynamicProxy;
+﻿using JueAo.Infrastructure.Attributes;
 using Prism.Commands;
 using Prism.Regions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using static JueAo.AopModel.App;
 
 namespace JueAo.AopModel.ViewModels
 {
@@ -41,6 +34,7 @@ namespace JueAo.AopModel.ViewModels
             
         }
 
+        [PostLog()]
         public virtual void ExecuteCommand2()
         {
             System.Diagnostics.Trace.WriteLine("Command2");
@@ -48,6 +42,7 @@ namespace JueAo.AopModel.ViewModels
             m_regionManger.RequestNavigate("Ui2", "Ui2");
         }
 
+        [PostLog()]
         public void ExecuteCommand1()
         {
             System.Diagnostics.Trace.WriteLine("Command1");

@@ -22,7 +22,7 @@ namespace JueAo.AopModel.ModuleOne
 
         public void RegisterViewModule()
         {
-            MyContainer.Instance.Builder.RegisterType<ViewModels.Ui1ViewModel>();
+            //MyContainer.Instance.Builder.RegisterType<ViewModels.Ui1ViewModel>();
         }
     }
 
