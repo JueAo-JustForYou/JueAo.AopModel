@@ -1,5 +1,7 @@
 using Autofac;
+using Autofac.Extras.DynamicProxy;
 using JueAo.Infrastructure;
+using JueAo.Infrastructure.Aops;
 using Prism.Ioc;
 using Prism.Modularity;
 
@@ -7,7 +9,7 @@ namespace JueAo.AopModel.ModuleTwo
 {
 
     [Module(ModuleName = "Two", OnDemand = false)]
-    public class ModuleTwo : IModule
+    public class ModuleTwo : IModule, IModuleRegisterViewModel
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
@@ -18,7 +20,16 @@ namespace JueAo.AopModel.ModuleTwo
         {
             containerRegistry.RegisterForNavigation<Views.Ui2>("Ui2");
 
-            MyContainer.Instance.Builder.RegisterType<ViewModels.Ui2ViewModel>();
+
+
+        }
+
+        public void RegisterViewModule()
+        {
+            MyContainer.Instance.Builder
+                .RegisterType<ViewModels.Ui2ViewModel>()
+                .InterceptedBy(typeof(CommandLogAop))
+                .EnableClassInterceptors();
         }
     }
 

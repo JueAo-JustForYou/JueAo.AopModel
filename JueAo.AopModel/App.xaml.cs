@@ -2,6 +2,7 @@
 using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
 using JueAo.Infrastructure;
+using JueAo.Infrastructure.Aops;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -10,6 +11,7 @@ using Prism.Regions;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace JueAo.AopModel
 {
@@ -61,64 +63,66 @@ namespace JueAo.AopModel
                 return;
             }
 
-            Type iIModuleRegisterViewModelType = typeof(IModuleRegisterViewModel);
+            //Type iIModuleRegisterViewModelType = typeof(IModuleRegisterViewModel);
 
 
-            List<Assembly> assemblies = new List<Assembly>();
+            //List<Assembly> assemblies = new List<Assembly>();
 
-            string[] files = Directory.GetFiles(basePath, "*.dll");
-            foreach (var file in files)
-            {
-                Assembly assembly = Assembly.LoadFrom(file);
-                foreach (var item in assembly.GetTypes()
-                    .Where(x => !x.IsAbstract && iIModuleRegisterViewModelType.IsAssignableFrom(x)))
-                {
-                    IModuleRegisterViewModel moduleRegisterViewModel = (IModuleRegisterViewModel)Activator.CreateInstance(item);
-                    moduleRegisterViewModel.RegisterViewModule();
+            //string[] files = Directory.GetFiles(basePath, "*.dll");
+            //foreach (var file in files)
+            //{
+            //    Assembly assembly = Assembly.LoadFrom(file);
+            //    foreach (var item in assembly.GetTypes()
+            //        .Where(x => !x.IsAbstract && iIModuleRegisterViewModelType.IsAssignableFrom(x)))
+            //    {
+            //        IModuleRegisterViewModel moduleRegisterViewModel = (IModuleRegisterViewModel)Activator.CreateInstance(item);
+            //        moduleRegisterViewModel.RegisterViewModule();
 
-                    assemblies.Add(assembly);
-                }
+            //        assemblies.Add(assembly);
+            //    }
 
-                //Assembly assembly = Assembly.LoadFrom(file);
+            //    //Assembly assembly = Assembly.LoadFrom(file);
 
-                //foreach (Type type in assembly.GetTypes()
-                //    .Where(x=>x.IsInterface== false))
-                //{
-                //    if(type.GetInterfaces().Any(iface=> iface.get))
-                //}
-            }
+            //    //foreach (Type type in assembly.GetTypes()
+            //    //    .Where(x=>x.IsInterface== false))
+            //    //{
+            //    //    if(type.GetInterfaces().Any(iface=> iface.get))
+            //    //}
+            //}
 
 
             MyContainer.Instance.Builder.Register(c => new CallTester());
+            MyContainer.Instance.Builder.Register(c => new CommandLogAop());
 
             MyContainer.Instance.Builder.RegisterType<Views.MainWindowView>();
             MyContainer.Instance.Builder.RegisterType<ViewModels.MainWindowViewModel>()
-                .InterceptedBy(typeof(CallTester))
+                .InterceptedBy(typeof(CommandLogAop))
                 .EnableClassInterceptors();
 
-            MyContainer.Instance.Builder.RegisterType<Mytest1>()
-                .InterceptedBy(typeof(CallTester))
-                .EnableClassInterceptors();
+            MyContainer.Instance.Builder.Register<IRegionManager>(x => this.Container.Resolve<RegionManager>());
 
-            //MyContainer.Instance.Builder.Register<IRegionManager>(x => this.Container.Resolve<RegionManager>());
+    //        MyContainer.Instance.Builder
+    //.RegisterType<AopModel.ModuleTwo.ViewModels.Ui2ViewModel>()
+    //.InterceptedBy(typeof(CommandLogAop))
+    //.EnableClassInterceptors();
+
+            //foreach (var assembly in assemblies)
+            //{
+            //    foreach (Type type in assembly.GetTypes()
+            //        .Where(x=> !x.IsAbstract && x.Name.EndsWith("ViewModel") && x.IsClass))
+            //    {
+            //        Type? viewType = assembly.GetTypes().FirstOrDefault(x => !x.IsAbstract
+            //            && (x.Name.Equals(type.Name.Replace("ViewModel", "View")) || x.Name.Equals(type.Name.Replace("ViewModel", ""))));
+
+            //        if (viewType != null)
+            //        {
+            //            ViewModelLocationProvider.Register(viewType.ToString(), () => MyContainer.Instance.Container.Resolve(type));
+            //            System.Diagnostics.Trace.WriteLine($"{viewType.ToString()}-{type.ToString()}");
+            //        }
+            //    }
+            //}
 
             MyContainer.Instance.Init();
-
-            foreach (var assembly in assemblies)
-            {
-                foreach (Type type in assembly.GetTypes()
-                    .Where(x=> !x.IsAbstract && x.Name.EndsWith("ViewModel") && x.IsClass))
-                {
-                    Type? viewType = assembly.GetTypes().FirstOrDefault(x => !x.IsAbstract
-                        && (x.Name.Equals(type.Name.Replace("ViewModel", "View")) || x.Name.Equals(type.Name.Replace("ViewModel", ""))));
-
-                    if (viewType != null)
-                    {
-                        ViewModelLocationProvider.Register(viewType.ToString(), () => MyContainer.Instance.Container.Resolve(type));
-                        System.Diagnostics.Trace.WriteLine($"{viewType.ToString()}-{type.ToString()}");
-                    }
-                }
-            }
 
         }
 
@@ -155,21 +159,35 @@ namespace JueAo.AopModel
 
         protected override Window CreateShell()
         {
+            return this.Container.Resolve<Views.MainWindowView>();
 
-
-
-            //mainWindowView.DataContext = viewModel;
-
+            //LoadAllViewModels();
 
             //return MyContainer.Instance.Container.Resolve<Views.MainWindowView>();
-            return this.Container.Resolve<Views.MainWindowView>();
+           
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            
 
-            
+            //LoadAllViewModels();
+
+            //containerRegistry.Register<ViewModels.MainWindowViewModel>(() =>
+            //{
+            //    return MyContainer.Instance.Container.Resolve<ViewModels.MainWindowViewModel>();
+            //});
+
+
+            //containerRegistry.Register<AopModel.ModuleTwo.ViewModels.Ui2ViewModel>(() =>
+            //{
+            //    return MyContainer.Instance.Container.Resolve<AopModel.ModuleTwo.ViewModels.Ui2ViewModel>();
+            //});
+
+            //containerRegistry.Register<AopModel.ModuleOne.ViewModels.Ui1ViewModel>(() =>
+            //{
+            //    return MyContainer.Instance.Container.Resolve<AopModel.ModuleOne.ViewModels.Ui1ViewModel>();
+            //});
+
 
         }
 
@@ -177,12 +195,12 @@ namespace JueAo.AopModel
         {
             base.ConfigureViewModelLocator();
 
-            
-            LoadAllViewModels();
 
-            ViewModelLocationProvider.Register(typeof(Views.MainWindowView).ToString(),
-                () => MyContainer.Instance.Container.Resolve<ViewModels.MainWindowViewModel>()
-            );
+            //LoadAllViewModels();
+
+            //ViewModelLocationProvider.Register(typeof(Views.MainWindowView).ToString(),
+            //    () => MyContainer.Instance.Container.Resolve<ViewModels.MainWindowViewModel>()
+            //);
 
             //ViewModelLocationProvider.SetDefaultViewModelFactory(
             //    (Func<object, Type, object>)((view, type) =>
@@ -191,7 +209,8 @@ namespace JueAo.AopModel
             //    })
             //);
 
-            //ViewModelLocationProvider.Register
+
+
 
         }
     }

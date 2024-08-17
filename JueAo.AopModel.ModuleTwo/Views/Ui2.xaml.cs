@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Autofac;
+using JueAo.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,15 @@ namespace JueAo.AopModel.ModuleTwo.Views
         public Ui2()
         {
             InitializeComponent();
+
+            this.Loaded += Ui2_Loaded;
+
+            
+        }
+
+        private void Ui2_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.DataContext = MyContainer.Instance.Container.Resolve<ViewModels.Ui2ViewModel>();
         }
     }
 }

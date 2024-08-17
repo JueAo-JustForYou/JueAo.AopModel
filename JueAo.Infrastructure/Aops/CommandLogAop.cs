@@ -1,6 +1,6 @@
 ﻿
 using Castle.DynamicProxy;
-using Microsoft.Extensions.Logging;
+//using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace JueAo.Infrastructure.Aops
 {
     public class CommandLogAop : IInterceptor
     {
-        private readonly ILogger m_logger;
+        //private readonly ILogger m_logger;
 
         public CommandLogAop(/*ILogger logger*/)
         {
@@ -22,9 +22,12 @@ namespace JueAo.Infrastructure.Aops
         {
             try
             {
-                System.Diagnostics.Trace.WriteLine($"Command {invocation.Method.Name} executed");
+                System.Diagnostics.Trace.WriteLine($"----------------Command {invocation.Method.Name} executed");
 
                 invocation.Proceed();
+
+                System.Diagnostics.Trace.WriteLine($"Command {invocation.Method.Name} executed----------------");
+
                 //m_logger.LogInformation($"Command {invocation.Method.Name} executed");
             }
             catch (Exception ex)

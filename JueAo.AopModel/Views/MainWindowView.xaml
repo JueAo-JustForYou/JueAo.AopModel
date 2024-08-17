@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:JueAo.AopModel.Views"
         xmlns:prism ="http://prismlibrary.com/"
         mc:Ignorable="d"
-         prism:ViewModelLocator.AutoWireViewModel="True"
+        prism:ViewModelLocator.AutoWireViewModel="True"
         Title="MainWindowView" Height="450" Width="800">
     <!--prism:ViewModelLocator.AutoWireViewModel="True"-->
     <Grid>
@@ -29,7 +29,7 @@
         <Grid Grid.Row="1">
             <ContentControl prism:RegionManager.RegionName="Ui1"/>
         </Grid>
-        
+
         <Grid Grid.Row="2">
             <ContentControl prism:RegionManager.RegionName="Ui2"/>
         </Grid>
