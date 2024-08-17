@@ -33,13 +33,13 @@ namespace JueAo.AopModel.ModuleOne.ViewModels
             m_command2 = new DelegateCommand(ExecuteCommand2);
         }
 
-        [PostLog()]
+        [PostLog(Message = "Ui1ViewModel_Command2")]
         public virtual void ExecuteCommand2()
         {
             System.Diagnostics.Trace.WriteLine("Ui1ViewModel Command2");
         }
 
-        [PostLog()]
+        [PostLog(Message ="Ui1ViewModel_Command1")]
         public void ExecuteCommand1()
         {
             System.Diagnostics.Trace.WriteLine("Ui1ViewModel Command1");

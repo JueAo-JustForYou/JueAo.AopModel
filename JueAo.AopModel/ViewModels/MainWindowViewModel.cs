@@ -34,7 +34,7 @@ namespace JueAo.AopModel.ViewModels
             
         }
 
-        [PostLog()]
+        [PostLog(Message = "MainWindowViewModel_ExecuteCommand2")]
         public virtual void ExecuteCommand2()
         {
             System.Diagnostics.Trace.WriteLine("Command2");
@@ -42,7 +42,7 @@ namespace JueAo.AopModel.ViewModels
             m_regionManger.RequestNavigate("Ui2", "Ui2");
         }
 
-        [PostLog()]
+        [PostLog(Message = "MainWindowViewModel_ExecuteCommand1")]
         public void ExecuteCommand1()
         {
             System.Diagnostics.Trace.WriteLine("Command1");

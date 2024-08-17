@@ -34,14 +34,15 @@ namespace JueAo.AopModel
 
         protected override IModuleCatalog CreateModuleCatalog()
         {
-            string modulePath = @".\Modules";
-            if (!Directory.Exists(modulePath))
-            {
-                Directory.CreateDirectory(modulePath);
-            }
+            return new DirectoryModuleCatalog() { ModulePath = AppDomain.CurrentDomain.BaseDirectory };
+            //string modulePath = @".\Modules";
+            //if (!Directory.Exists(modulePath))
+            //{
+            //    Directory.CreateDirectory(modulePath);
+            //}
 
             
-            return new DirectoryModuleCatalog() { ModulePath = modulePath };
+            //return new DirectoryModuleCatalog() { ModulePath = modulePath };
         }
 
         public class CallTester : IInterceptor

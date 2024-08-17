@@ -8,6 +8,9 @@ namespace JueAo.Infrastructure.Attributes
     [AttributeUsage(AttributeTargets.Method , AllowMultiple = true, Inherited = true)]
     public class PostLogAttribute : OnMethodBoundaryAspect
     {
+
+        public string Message { get; set; } = string.Empty;
+
         public PostLogAttribute()
         {
         }
@@ -16,7 +19,7 @@ namespace JueAo.Infrastructure.Attributes
         {
             var parameters = args.Method.GetParameters();
 
-            var printInfo = $"方法：{args.Method.Name}，开始执行，时间：{DateTime.Now}";
+            var printInfo = $"方法：{args.Method.Name}，Message:{Message} 开始执行，时间：{DateTime.Now}";
 
             Trace.TraceInformation(printInfo);
         }
