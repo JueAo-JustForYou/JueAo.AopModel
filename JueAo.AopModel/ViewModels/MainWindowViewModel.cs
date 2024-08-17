@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extras.DynamicProxy;
 using Prism.Commands;
+using Prism.Ioc;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
@@ -30,13 +31,13 @@ namespace JueAo.AopModel.ViewModels
             get { return m_command2; }
         }
 
-        public MainWindowViewModel(IRegionManager regionManger)
+        public MainWindowViewModel(/*IRegionManager regionManger*/)
         {
             System.Diagnostics.Trace.WriteLine("MainWindowViewModel");
 
             m_command1 = new DelegateCommand(ExecuteCommand1);
             m_command2 = new DelegateCommand(ExecuteCommand2);
-            m_regionManger = regionManger;
+            m_regionManger = Prism.Ioc.ContainerLocator.Container.Resolve<IRegionManager>();
 
             
         }
@@ -52,7 +53,10 @@ namespace JueAo.AopModel.ViewModels
         {
             System.Diagnostics.Trace.WriteLine("Command1");
 
-            m_regionManger.RequestNavigate("Ui1", "Ui1");
+            m_regionManger.RequestNavigate("Ui1", "Ui1",(x)=>
+            {
+                System.Diagnostics.Trace.WriteLine($"{x.Result}");
+            });
 
 
         }
