@@ -1,20 +1,15 @@
-﻿using Autofac;
-using Autofac.Extras.DynamicProxy;
-using Prism.Commands;
-using Prism.Regions;
+﻿using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using static JueAo.AopModel.App;
 
-namespace JueAo.AopModel.ViewModels
+namespace JueAo.AopModel.ModuleTwo.ViewModels
 {
-    public class MainWindowViewModel
+    public class Ui2ViewModel
     {
-
         private ICommand m_command1;
 
         public ICommand Command1
@@ -23,36 +18,28 @@ namespace JueAo.AopModel.ViewModels
         }
 
         private ICommand m_command2;
-        private readonly IRegionManager m_regionManger;
 
         public ICommand Command2
         {
             get { return m_command2; }
         }
 
-        public MainWindowViewModel(IRegionManager regionManger)
+        public Ui2ViewModel()
         {
-            System.Diagnostics.Trace.WriteLine("MainWindowViewModel");
+            System.Diagnostics.Trace.WriteLine("Ui2ViewModel");
 
             m_command1 = new DelegateCommand(ExecuteCommand1);
             m_command2 = new DelegateCommand(ExecuteCommand2);
-            m_regionManger = regionManger;
-
-            
         }
 
         public virtual void ExecuteCommand2()
         {
-            System.Diagnostics.Trace.WriteLine("Command2");
-
-            m_regionManger.RequestNavigate("Ui2", "Ui2");
+            System.Diagnostics.Trace.WriteLine("Ui2ViewModel Command2");
         }
 
         public void ExecuteCommand1()
         {
-            System.Diagnostics.Trace.WriteLine("Command1");
-
-            m_regionManger.RequestNavigate("Ui1", "Ui1");
+            System.Diagnostics.Trace.WriteLine("Ui2ViewModel Command1");
 
 
         }

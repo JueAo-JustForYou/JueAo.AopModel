@@ -4,6 +4,11 @@ using Castle.DynamicProxy;
 using JueAo.Infrastructure;
 using Prism.DryIoc;
 using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Mvvm;
+using Prism.Regions;
+using System.IO;
+using System.Reflection;
 using System.Windows;
 
 namespace JueAo.AopModel
@@ -44,9 +49,41 @@ namespace JueAo.AopModel
 
 
 
-
+            
 
         }
+
+        private void LoadAllViewModels()
+        {
+            string basePath = Path.Combine(AppContext.BaseDirectory, "Modules");
+            if (!Directory.Exists(basePath))
+            {
+                return;
+            }
+
+            Type iIModuleRegisterViewModelType = typeof(IModuleRegisterViewModel);
+
+            string[] files = Directory.GetFiles(basePath, "*.dll");
+            foreach (var file in files)
+            {
+                foreach (var item in Assembly.LoadFrom(file).GetTypes()
+                    .Where(x=>!x.IsAbstract && iIModuleRegisterViewModelType.IsAssignableFrom(x)))
+                {
+                    IModuleRegisterViewModel moduleRegisterViewModel = this.Container.Resolve(item) as IModuleRegisterViewModel;
+                    moduleRegisterViewModel.RegisterViewModule();
+                }
+
+                //Assembly assembly = Assembly.LoadFrom(file);
+
+                //foreach (Type type in assembly.GetTypes()
+                //    .Where(x=>x.IsInterface== false))
+                //{
+                //    if(type.GetInterfaces().Any(iface=> iface.get))
+                //}
+            }
+
+        }
+
 
         public class Mytest1
         {
@@ -54,6 +91,18 @@ namespace JueAo.AopModel
             {
                 System.Diagnostics.Trace.WriteLine("test");
             }
+        }
+
+        protected override IModuleCatalog CreateModuleCatalog()
+        {
+            string modulePath = @".\Modules";
+            if (!Directory.Exists(modulePath))
+            {
+                Directory.CreateDirectory(modulePath);
+            }
+
+            
+            return new DirectoryModuleCatalog() { ModulePath = modulePath };
         }
 
         public class CallTester : IInterceptor
@@ -68,6 +117,7 @@ namespace JueAo.AopModel
 
         protected override Window CreateShell()
         {
+            //LoadAllViewModels();
 
             MyContainer.Instance.Builder.Register(c => new CallTester());
 
@@ -80,25 +130,37 @@ namespace JueAo.AopModel
                 .InterceptedBy(typeof(CallTester))
                 .EnableClassInterceptors();
 
+            MyContainer.Instance.Builder.Register<IRegionManager>(x => this.Container.Resolve<RegionManager>());
+
             MyContainer.Instance.Init();
 
             var mytest1 = MyContainer.Instance.Container.Resolve<Mytest1>();
             mytest1.Test();
 
-            Views.MainWindowView mainWindowView = MyContainer.Instance.Container.Resolve<Views.MainWindowView>();
-
-            ViewModels.MainWindowViewModel viewModel = MyContainer.Instance.Container.Resolve<ViewModels.MainWindowViewModel>();
-
-            viewModel.ExecuteCommand1();
             //mainWindowView.DataContext = viewModel;
+
+            
 
             return this.Container.Resolve<Views.MainWindowView>();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            
         }
+
+        //protected override void ConfigureViewModelLocator()
+        //{
+        //    base.ConfigureViewModelLocator();
+
+        //    ViewModelLocationProvider.SetDefaultViewModelFactory(
+        //        (Func<object, Type, object>)((view, type) =>
+        //        {
+        //            return MyContainer.Instance.Container.Resolve(type);
+        //        })
+        //    );
+
+        //}
     }
 
 }

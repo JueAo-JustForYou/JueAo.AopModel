@@ -6,17 +6,33 @@
         xmlns:local="clr-namespace:JueAo.AopModel.Views"
         xmlns:prism ="http://prismlibrary.com/"
         mc:Ignorable="d"
-         prism:ViewModelLocator.AutoWireViewModel="False"
+         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="MainWindowView" Height="450" Width="800">
     <!--prism:ViewModelLocator.AutoWireViewModel="True"-->
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="0" Content="按钮1" Command="{Binding Command1}"/>
-        <Button Grid.Column="1" Content="按钮2" Command="{Binding Command2}"/>
+            <Button Grid.Column="0" Content="Main 按钮1" Command="{Binding Command1}"/>
+            <Button Grid.Column="1" Content="Mian 按钮2" Command="{Binding Command2}"/>
 
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <ContentControl prism:RegionManager.RegionName="Ui1"/>
+        </Grid>
+        
+        <Grid Grid.Row="2">
+            <ContentControl prism:RegionManager.RegionName="Ui2"/>
+        </Grid>
     </Grid>
+
 </Window>

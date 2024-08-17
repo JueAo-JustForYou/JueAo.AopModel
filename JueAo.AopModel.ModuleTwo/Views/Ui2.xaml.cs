@@ -1,7 +1,4 @@
-﻿using Autofac;
-using JueAo.AopModel.ViewModels;
-using JueAo.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace JueAo.AopModel.Views
+namespace JueAo.AopModel.ModuleTwo.Views
 {
     /// <summary>
-    /// MainWindowView.xaml 的交互逻辑
+    /// Ui2.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindowView : Window
+    public partial class Ui2 : UserControl
     {
-        public MainWindowView()
+        public Ui2()
         {
             InitializeComponent();
         }

@@ -14,6 +14,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\JueAo.AopModel.ModuleOne\JueAo.AopModel.ModuleOne.csproj" />
+		<ProjectReference Include="..\JueAo.AopModel.ModuleTwo\JueAo.AopModel.ModuleTwo.csproj" />
 		<ProjectReference Include="..\JueAo.Infrastructure\JueAo.Infrastructure.csproj" />
 	</ItemGroup>
 
